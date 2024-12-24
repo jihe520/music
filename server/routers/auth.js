@@ -3,10 +3,19 @@ const { db } = require('../db/DbUtils'); // 确保正确导入 db
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, isAdmin } = req.body;
 
   try {
-    const { err, rows } = await db.async.all('SELECT * FROM consumer WHERE username = ? AND password = ?', [username, password]);
+    let query;
+    const params = [username, password];
+
+    if (isAdmin) {
+      query = 'SELECT * FROM admin WHERE name = ? AND password = ?';
+    } else {
+      query = 'SELECT * FROM consumer WHERE username = ? AND password = ?';
+    }
+
+    const { err, rows } = await db.async.all(query, params);
 
     if (err) {
       console.error('Error executing query:', err);
