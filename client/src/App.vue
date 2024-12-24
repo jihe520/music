@@ -1,21 +1,23 @@
-<template>
-  <div id="app">
-    <router-view /> <!-- 确保这里使用了 <router-view> -->
-  </div>
-</template>
+<script setup>
+import { ref,onMounted } from 'vue'
+import {getTestList} from './apis/testAPI'
 
-<script>
-export default {
-  name: 'App'
-};
+const testList = ref([])
+
+// 测试接口
+onMounted(async () => {
+  testList.value = await getTestList()
+  console.log(testList.value)
+})
+
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<template>
+<ul>
+  <li v-for="item in testList" :key="item.id">{{ item.name }}</li>
+</ul>
+</template>
+
+<style scoped>
+
 </style>
