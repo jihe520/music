@@ -2,7 +2,7 @@ const express = require("express")
 const path = require("path")
 const app = express();
 const port = 8080
-
+const authRouter = require('./routers/auth');
 //开放跨域请求
 app.use(function (req, res, next) {
     //设置允许跨域的域名，*代表允许任意域名跨域
@@ -26,7 +26,7 @@ app.use("/test", require("./routers/TestRouter"))
 app.get("/", (req, res) => {
     res.send("hello world");
 })
-
+app.use('/api', authRouter);
 app.listen(port, () => {
     console.log(`启动成功 : http://localhost:${port}/`)
 })

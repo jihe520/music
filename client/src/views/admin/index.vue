@@ -1,10 +1,13 @@
 <script setup>
-</script>
 
+</script>
 <template>
-  <router-view />
+  <div>
+    <h1>Admin</h1>
+  </div>
 </template>
 
 <style scoped>
 
 </style>
+
