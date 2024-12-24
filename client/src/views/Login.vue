@@ -1,23 +1,41 @@
 <template>
-  <div class="login-container">
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>Music 播放系统登录</span>
-      </div>
-      <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="80px">
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="loginForm.username"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input type="password" v-model="loginForm.password" @keyup.enter.native="submitForm('loginForm')"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
-          <el-button @click="resetForm('loginForm')">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </el-card>
-  </div>
+  <el-row type="flex" justify="center" align="middle" style="height: 100vh;">
+    <el-col :xs="20" :sm="16" :md="12" :lg="8" :xl="6">
+      <el-card class="box-card">
+        <!-- 卡片头部 -->
+        <template #header>
+          <div class="card-header">
+            <span>Music 播放系统登录</span>
+          </div>
+        </template>
+
+        <!-- 登录表单 -->
+        <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="80px">
+          <el-form-item label="用户名" prop="username">
+            <el-input v-model="loginForm.username" placeholder="请输入用户名">
+            </el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input
+              type="password"
+              v-model="loginForm.password"
+              placeholder="请输入密码"
+              @keyup.enter="submitForm('loginForm')"
+            >
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('loginForm')" class="submit-button">登录</el-button>
+          </el-form-item>
+          <el-form-item>
+            <div class="register-link">
+              <el-link type="primary" @click="goToRegister">没有账号？点击此处注册账号</el-link>
+            </div>
+          </el-form-item>
+        </el-form>
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
@@ -62,8 +80,8 @@ export default {
         }
       });
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    goToRegister() {
+      this.$router.push('/register'); // 跳转到注册页面
     }
   }
 };
@@ -75,10 +93,50 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #f5f5f5;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* 渐变背景 */
 }
 
 .box-card {
   width: 400px;
+  border-radius: 10px; /* 圆角 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 阴影 */
+  animation: fadeIn 0.5s ease-in-out; /* 添加淡入动画 */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-header {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.el-form-item {
+  margin-bottom: 20px;
+}
+
+.submit-button {
+  width: 100%;
+  background-color: #409EFF;
+  border-color: #409EFF;
+}
+
+.submit-button:hover {
+  background-color: #66B1FF;
+  border-color: #66B1FF;
+}
+
+.register-link {
+  text-align: center;
 }
 </style>
